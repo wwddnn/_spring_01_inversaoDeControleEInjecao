@@ -1,6 +1,7 @@
 package app;
 
 import entities.Employee;
+import services.BrazilTaxService;
 import services.PensionService;
 import services.SalaryService;
 import services.TaxService;
@@ -24,10 +25,13 @@ public class Program {
         /* esse programa principal aqui é como se fosse o encaixe da bateria fora do motor.
         * ... pois eu encaixei os componentes (TaxService, PensionService e SalaryService aqui fora ...
         * ... em compensacao la na classe SalaryService nao tem mais os componentes dentro dela encaixados */
-        /* vou instanciar o TaxService e o PensionService aqui*/
-        TaxService taxService = new TaxService();
+        // aqui troquei a dependencia, agora é BrazilTaxService o que antes era TaxService. mas sem mexer no motor que é o componente SalaryService...
+        // isso é um Upcasting que é uma sublasse instanciada que é BrazilTaxService e salva numa variavel do tipo superclasse TaxService.
+        TaxService taxService = new BrazilTaxService();
+        /* vou instanciar  o PensionService aqui*/
         PensionService pensionService = new PensionService();
         /* tenho que instanciar o SalaryService aqui e passar como argumentos os 2 componentes. conforme esta la no metodo construtor da classe SalaryService */
+        // aqui no construtor nao muda nada, continua TaxService, mesmo ai em cima trocando a dependencia para BrazilTaxService.
         SalaryService salaryService = new SalaryService(taxService, pensionService);
 
         double netSalary = salaryService.netSalary(employee);
